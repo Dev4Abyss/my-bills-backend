@@ -14,10 +14,13 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
     public Usuario save(Usuario usuario) {
+        if (repository.existsByEmail(usuario.getEmail())) {
+            throw new RuntimeException("Usuário já existe com o email: " + usuario.getEmail());
+        }
         return repository.save(usuario);
     }
 
-    public List<Usuario> listarTudo(){
+    public List<Usuario> listarTudo() {
         return repository.findAll();
     }
 }
